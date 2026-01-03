@@ -39,7 +39,7 @@ const TermsConditions = () => (
           <section>
             <h2 className="text-2xl font-bold text-primary mb-4">6. Contact</h2>
             <p className="text-muted-foreground">Email: <a href="mailto:deccanhiveonline@gmail.com" className="text-primary hover:underline">deccanhiveonline@gmail.com</a></p>
-            <p className="text-muted-foreground">Phone: <a href="tel:+919063117093" className="text-primary hover:underline">+91 9063117093</a></p>
+            <p className="text-muted-foreground">Phone: <a href="tel:+91 6303866637" className="text-primary hover:underline">+91 6303866637</a></p>
           </section>
         </div>
       </div>
@@ -48,3 +48,4 @@ const TermsConditions = () => (
 );
 
 export default TermsConditions;
+
