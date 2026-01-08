@@ -5,7 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import LenisProvider, { useLenis } from "@/components/LenisProvider";
-import Layout from "@/components/Layout"; // Import the Layout
+import Layout from "@/components/Layout";
+import { Analytics } from "@vercel/analytics/react";
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -43,6 +44,7 @@ const App = () => (
       <LenisProvider>
         <Toaster />
         <Sonner />
+        <Analytics />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
