@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, Lightbulb, Handshake, Target, Heart } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Magnetic } from '@/components/ui/magnetic';
 import SEOHead from '@/components/SEOHead';
@@ -9,32 +9,39 @@ import { OrganizationSchema } from '@/components/JsonLd';
 import TeamSection from '@/components/TeamSection';
 
 const About = () => {
+  // Parallax Logic
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   const coreValues = [
-    { icon: Lightbulb, title: 'INNOVATION', description: 'We constantly explore new strategies and technologies to keep your business ahead of the curve.' },
+    { icon: Lightbulb, title: 'INNOVATION', description: 'We constantly explore new strategies, including AI automation and trend-jacking, to keep you ahead.' },
     { icon: Handshake, title: 'TRANSPARENCY', description: 'Clear communication and honest reporting at every step of your digital journey.' },
-    { icon: Target, title: 'RESULTS-DRIVEN', description: 'Every action we take is focused on delivering measurable outcomes for your business.' },
+    { icon: Target, title: 'RESULTS-DRIVEN', description: 'Every action is focused on delivering measurable outcomes, from leads to brand visibility.' },
     { icon: Heart, title: 'PARTNERSHIP', description: 'We build long-term relationships, treating your success as our own.' },
   ];
 
   return (
-    // CHANGE: Removed 'bg-background' and 'min-h-screen' to allow Layout bg to show
     <main className="w-full relative overflow-x-hidden text-foreground">
       <SEOHead 
-        title="About Us - Deccan Hive Digital Marketing Agency"
-        description="Learn about Deccan Hive, a passionate team of digital marketing experts dedicated to helping local businesses thrive in the digital landscape."
+        title="About Deccan Hive | Top Digital Marketing & PR Agency in Hyderabad"
+        description="Deccan Hive (Hive Digital) is a leading digital marketing and PR agency in Hyderabad. We specialize in AI automation, social media marketing, and local growth strategies."
         canonicalPath="/about"
       />
       <OrganizationSchema />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24">
-        <div className="container mx-auto text-center max-w-5xl relative">
+      {/* Hero Section with Parallax */}
+      <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
+        <motion.div 
+          className="container mx-auto text-center max-w-5xl relative"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <span className="label-tag mb-6">About Us</span>
+            <span className="label-tag mb-6">About Deccan Hive</span>
             <GradualSpacing
               text="WE ARE DECCAN HIVE"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground"
@@ -42,7 +49,7 @@ const About = () => {
               delayMultiple={0.02}
             />
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto text-pretty">
-              A passionate team of digital marketing experts dedicated to helping local businesses thrive in the digital landscape.
+              A passionate team of digital marketing experts and PR strategists helping local businesses and "Deccan Marketing" leaders thrive online.
             </p>
             <div className="flex justify-center mt-6 sm:mt-8">
               <Magnetic strength={0.3}>
@@ -55,7 +62,7 @@ const About = () => {
               </Magnetic>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Mission Section */}
@@ -65,15 +72,15 @@ const About = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
             >
               <span className="label-tag mb-4">Our Mission</span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-balance">
                 EMPOWERING <span className="text-gradient-gold">LOCAL BUSINESSES</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-6 text-pretty">
-                At Deccan Hive, we believe every local business deserves access to world-class digital marketing. Our mission is to bridge the gap between traditional businesses and the digital world, providing affordable, effective, and results-driven marketing solutions.
+                At Deccan Hive, we believe every local business deserves access to world-class digital marketing. Our mission is to bridge the gap between traditional businesses and the digital world.
               </p>
               <p className="text-muted-foreground text-pretty">
                 We specialize in understanding the unique challenges faced by micro and small businesses, crafting strategies that deliver real ROI without breaking the bank.
@@ -82,14 +89,14 @@ const About = () => {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              viewport={{ once: true, margin: "-100px" }}
               className="premium-card p-8"
             >
               <Eye className="w-12 h-12 text-primary mb-6" />
               <h3 className="text-2xl font-bold mb-4 text-balance">Our Vision</h3>
               <p className="text-muted-foreground text-lg text-pretty">
-                To be the leading digital marketing agency that transforms local businesses into digital success stories, creating a thriving ecosystem where small businesses can compete and win in the digital age.
+                To be the leading digital marketing agency that transforms local businesses into digital success stories, creating a thriving ecosystem where small businesses can compete and win.
               </p>
             </motion.div>
           </div>
@@ -115,9 +122,9 @@ const About = () => {
             {coreValues.map((value, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="premium-card p-8 text-center group hover:border-primary/40 transition-all duration-300"
               >
@@ -132,16 +139,15 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
       <TeamSection />
 
       {/* CTA Section */}
       <section className="py-16 lg:py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
             className="premium-card p-8 sm:p-12 text-center"
           >
