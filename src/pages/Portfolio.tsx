@@ -1,11 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { TrendingUp, BarChart3, Users, DollarSign } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import SEOHead from '@/components/SEOHead';
 
 const Portfolio = () => {
+  // Parallax Logic
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   const portfolioItems = [
     { title: 'E-commerce Growth Campaign', client: 'Kumar Electronics', challenge: 'Local electronics retailer needed to increase online sales by 300%', result: '450% ROI achieved with ₹50L+ revenue generated', metrics: { roi: '450%', revenue: '₹50L+', leads: '2,500+' }, tags: ['Google Ads', 'Meta Ads', 'E-commerce'] },
     { title: 'B2B Lead Generation', client: 'TechSolutions Pvt Ltd', challenge: 'Tech startup required 200+ qualified leads monthly', result: '250+ qualified leads per month with 35% conversion rate', metrics: { roi: '380%', leads: '2,000+', conversion: '35%' }, tags: ['LinkedIn Ads', 'Content Marketing', 'B2B'] },
@@ -14,34 +19,56 @@ const Portfolio = () => {
   ];
 
   return (
-    // UPDATED: Removed bg-background and min-h-screen
     <main className="w-full relative overflow-x-hidden text-foreground">
       <SEOHead 
-        title="Portfolio - Success Stories & Case Studies"
-        description="Explore our portfolio of successful digital marketing campaigns. See how we've helped businesses achieve 400%+ ROI with proven strategies."
+        title="Our Work | Success Stories in Digital Marketing & PR"
+        description="See how Deccan Hive helps businesses grow. From 'Deccan Marketing' strategies to advanced AI automation, explore our case studies in social media and PR."
         canonicalPath="/portfolio"
       />
-      <section className="relative min-h-[80vh] flex items-center justify-center px-4 pt-24">
-        <div className="container mx-auto text-center max-w-5xl">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+      {/* Hero Section with Parallax */}
+      <section className="relative min-h-[80vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
+        <motion.div 
+          className="container mx-auto text-center max-w-5xl"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          >
             <span className="label-tag mb-6">Proven Results</span>
             <GradualSpacing text="SUCCESS STORIES" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground" duration={0.3} delayMultiple={0.03} />
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto text-pretty">Real results for real businesses. Discover how we've helped our clients achieve remarkable growth.</p>
           </motion.div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto"
+          >
             {[{ icon: TrendingUp, num: '500+', label: 'Projects' }, { icon: DollarSign, num: '₹100Cr+', label: 'Revenue' }, { icon: BarChart3, num: '400%', label: 'Avg ROI' }, { icon: Users, num: '98%', label: 'Satisfaction' }].map((stat, i) => (
               <div key={i} className="premium-card p-4 text-center"><stat.icon className="w-6 h-6 text-primary mx-auto mb-2" /><div className="text-2xl font-bold text-primary">{stat.num}</div><div className="text-xs text-muted-foreground">{stat.label}</div></div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
+
+      {/* Case Studies with Staggered Reveal */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {portfolioItems.map((item, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }} className="premium-card p-8">
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 50 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }} 
+                viewport={{ once: true, margin: "-50px" }} 
+                className="premium-card p-8 group"
+              >
                 <div className="flex flex-wrap gap-2 mb-4">{item.tags.map((tag, i) => (<span key={i} className="text-xs font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">{tag}</span>))}</div>
-                <h3 className="text-xl font-bold mb-2 text-balance">{item.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-balance group-hover:text-primary transition-colors">{item.title}</h3>
                 <p className="text-primary text-sm font-medium mb-4">Client: {item.client}</p>
                 <div className="space-y-3 mb-6">
                   <div><span className="text-xs text-muted-foreground uppercase">Challenge:</span><p className="text-sm text-foreground/80 text-pretty">{item.challenge}</p></div>
