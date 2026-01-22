@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Target, MessageSquare, Video, Monitor, ShoppingCart, PaintBucket, CheckCircle2, Zap, TrendingUp } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Card, CardContent } from '@/components/ui/card';
 import { Magnetic } from '@/components/ui/magnetic';
@@ -9,6 +9,11 @@ import SEOHead from '@/components/SEOHead';
 import { ServiceSchema } from '@/components/JsonLd';
 
 const Services = () => {
+  // Parallax Logic
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   const mainServices = [
     {
       icon: Target,
@@ -68,22 +73,24 @@ const Services = () => {
   ];
 
   return (
-    // UPDATED: Removed bg-background and min-h-screen
     <main className="w-full relative overflow-x-hidden text-foreground">
       <SEOHead 
-        title="Digital Marketing Services - Paid Ads, SEO, Web Development"
-        description="Comprehensive digital marketing services including Google Ads, Meta Ads, SEO, web development, and more. Get 360° solutions for your business growth."
+        title="Digital Marketing Services | SEO, PPC, PR & Automation"
+        description="Looking for digital marketing near me? We offer 360° solutions: Social Media Marketing, AI Automation, PR, and SEO services tailored for local businesses."
         canonicalPath="/services"
       />
       <ServiceSchema serviceName="Digital Marketing Services" serviceDescription="Comprehensive 360° digital marketing solutions including paid advertising, SEO, web development, and content marketing." />
       
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24">
-        <div className="container mx-auto text-center max-w-5xl">
+      {/* Hero Section with Parallax */}
+      <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
+        <motion.div 
+          className="container mx-auto text-center max-w-5xl"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <span className="label-tag mb-6">360° Digital Solutions</span>
             <GradualSpacing
@@ -93,7 +100,7 @@ const Services = () => {
               delayMultiple={0.03}
             />
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto">
-              From paid advertising to content creation, we provide comprehensive digital marketing solutions tailored for micro and local businesses.
+              From paid advertising to AI automation, we provide comprehensive digital marketing solutions tailored for micro and local businesses.
             </p>
             <div className="flex justify-center mt-6 sm:mt-8">
               <Magnetic strength={0.3}>
@@ -106,22 +113,21 @@ const Services = () => {
               </Magnetic>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Bento Grid Services */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="grid gap-6">
-            {/* First Row - 2 columns */}
             <div className="grid md:grid-cols-2 gap-6">
               {mainServices.slice(0, 2).map((service, idx) => (
                 <motion.div
                   key={service.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-50px" }}
                 >
                   <Card className="premium-card h-full group hover:border-primary/40 transition-all duration-300">
                     <CardContent className="p-8">
@@ -152,15 +158,15 @@ const Services = () => {
               ))}
             </div>
 
-            {/* Second Row - 3 columns */}
+            {/* Remaining services */}
             <div className="grid md:grid-cols-3 gap-6">
               {mainServices.slice(2, 5).map((service, idx) => (
                 <motion.div
                   key={service.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-50px" }}
                 >
                   <Card className="premium-card h-full group hover:border-primary/40 transition-all duration-300">
                     <CardContent className="p-6">
@@ -190,16 +196,16 @@ const Services = () => {
                 </motion.div>
               ))}
             </div>
-
-            {/* Third Row - Full width with features */}
+            
             <div className="grid md:grid-cols-2 gap-6">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
               >
                 <Card className="premium-card h-full group hover:border-primary/40 transition-all duration-300">
-                  <CardContent className="p-8">
+                   <CardContent className="p-8">
                     <div className="flex items-start justify-between mb-6">
                       <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <PaintBucket className="w-7 h-7 text-primary" />
@@ -226,9 +232,9 @@ const Services = () => {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
                 viewport={{ once: true }}
               >
                 <Card className="premium-card h-full">
@@ -288,9 +294,9 @@ const Services = () => {
             {processSteps.map((step, idx) => (
               <motion.div
                 key={step.step}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ duration: 0.5, delay: idx * 0.15, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="premium-card p-6 text-center"
               >
@@ -307,9 +313,9 @@ const Services = () => {
       <section className="py-12 md:py-16 lg:py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true }}
             className="premium-card p-6 sm:p-8 md:p-12 text-center rounded-2xl"
           >
