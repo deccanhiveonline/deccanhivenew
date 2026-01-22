@@ -1,5 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, Instagram, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, Instagram, Facebook, Linkedin, Youtube, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,10 +11,8 @@ import SEOHead from '@/components/SEOHead';
 import { OrganizationSchema } from '@/components/JsonLd';
 import { z } from 'zod';
 
-// OPTIMIZATION: Lazy load the heavy WorldMap component
 const WorldMap = lazy(() => import('@/components/ui/world-map').then(module => ({ default: module.WorldMap })));
 
-// OPTIMIZATION: Move static data outside component to prevent re-creation
 const MAP_DOTS = [
   { start: { lat: 17.385, lng: 78.4867 }, end: { lat: 51.5074, lng: -0.1278 } }, // London
   { start: { lat: 17.385, lng: 78.4867 }, end: { lat: 40.7128, lng: -74.006 } }, // New York
@@ -23,19 +21,30 @@ const MAP_DOTS = [
   { start: { lat: 17.385, lng: 78.4867 }, end: { lat: -33.8688, lng: 151.2093 } }, // Sydney
 ];
 
+// UPDATED: Schema with new fields
 const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
-  subject: z.string().trim().max(200, "Subject must be less than 200 characters").optional(),
-  message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters")
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
+  phone: z.string().trim().min(10, "Valid phone number is required").max(15),
+  company: z.string().trim().optional(),
+  service: z.string().min(1, "Please select a service"),
+  message: z.string().trim().min(1, "Message is required").max(2000)
 });
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  // UPDATED: Form state
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    email: '', 
+    phone: '', 
+    company: '', 
+    service: '', 
+    message: '' 
+  });
   const [submissionStatus, setSubmissionStatus] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     if (errors[name]) {
@@ -60,8 +69,12 @@ const Contact = () => {
     }
 
     setSubmissionStatus('Sending...');
-    const sanitizedData = result.data;
-    const json = JSON.stringify({ ...sanitizedData, access_key: "6e27293d-8692-461d-a764-1b1ddc4d3cc0" });
+    // Replace access_key with your actual Web3Forms key
+    const json = JSON.stringify({ 
+      ...result.data, 
+      access_key: "6e27293d-8692-461d-a764-1b1ddc4d3cc0",
+      subject: `New Lead: ${result.data.service} - ${result.data.company || result.data.name}`
+    });
     
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -72,7 +85,7 @@ const Contact = () => {
       
       if (res.success) {
         setSubmissionStatus("Message sent successfully!");
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
         setTimeout(() => setSubmissionStatus(''), 5000);
       } else {
         setSubmissionStatus(res.message || "Something went wrong.");
@@ -98,16 +111,16 @@ const Contact = () => {
   ];
 
   return (
-    // UPDATED: Removed bg-background and min-h-screen
     <main className="w-full relative overflow-x-hidden text-foreground">
       <SEOHead 
-        title="Contact Us - Get Free Consultation"
-        description="Contact Deccan Hive for digital marketing services. Get a free consultation for your business growth. Mobile: +91 6303866637, Landline: +91 4045509587"
+        title="Contact Deccan Hive | Get a Quote Today"
+        description="Contact Hyderabad's best digital marketing agency. Fill out the form for services in SEO, PPC, Web Development, and AI Automation."
         canonicalPath="/contact"
       />
       <OrganizationSchema />
 
-      <section className="relative min-h-[40vh] md:min-h-[60vh] flex items-center justify-center px-4 pt-20 md:pt-24">
+      {/* Hero Section */}
+      <section className="relative min-h-[40vh] md:min-h-[50vh] flex items-center justify-center px-4 pt-20 md:pt-24">
         <div className="container mx-auto text-center max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -122,7 +135,7 @@ const Contact = () => {
               delayMultiple={0.03}
             />
             <p className="text-muted-foreground text-sm md:text-lg mt-4 md:mt-6 max-w-2xl mx-auto leading-relaxed">
-              Ready to transform your business? Let's discuss how our digital solutions can help you achieve your goals.
+              Ready to grow? Fill out the form below and we'll craft a strategy for your business.
             </p>
           </motion.div>
         </div>
@@ -131,125 +144,179 @@ const Contact = () => {
       <section className="py-6 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
+            
+            {/* Contact Form Block */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="premium-card p-5 md:p-8 rounded-2xl"
+              className="premium-card p-6 md:p-8 rounded-2xl h-fit"
             >
-              <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">
-                Send us a <span className="text-gradient-gold">Message</span>
+              <h2 className="text-xl md:text-2xl font-bold mb-6">
+                Project <span className="text-gradient-gold">Inquiry</span>
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6" noValidate>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                  <div>
+              
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                {/* Bento Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
+                  {/* Name */}
+                  <div className="space-y-1.5">
                     <Input
                       type="text"
                       name="name"
-                      placeholder="Your Name"
+                      placeholder="Full Name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      maxLength={100}
-                      aria-label="Your name"
                       aria-invalid={!!errors.name}
-                      className={`bg-secondary border-border h-11 md:h-12 text-sm md:text-base rounded-xl ${errors.name ? 'border-red-500' : ''}`}
+                      className={`bg-secondary border-border h-12 rounded-xl px-4 ${errors.name ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                     />
-                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                    {errors.name && <p className="text-red-500 text-xs px-1">{errors.name}</p>}
                   </div>
-                  <div>
+
+                  {/* Email */}
+                  <div className="space-y-1.5">
                     <Input
                       type="email"
                       name="email"
-                      placeholder="Your Email"
+                      placeholder="Email Address"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      maxLength={255}
-                      aria-label="Your email address"
                       aria-invalid={!!errors.email}
-                      className={`bg-secondary border-border h-11 md:h-12 text-sm md:text-base rounded-xl ${errors.email ? 'border-red-500' : ''}`}
+                      className={`bg-secondary border-border h-12 rounded-xl px-4 ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                     />
-                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                    {errors.email && <p className="text-red-500 text-xs px-1">{errors.email}</p>}
                   </div>
+
+                  {/* Phone */}
+                  <div className="space-y-1.5">
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={!!errors.phone}
+                      className={`bg-secondary border-border h-12 rounded-xl px-4 ${errors.phone ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                    />
+                    {errors.phone && <p className="text-red-500 text-xs px-1">{errors.phone}</p>}
+                  </div>
+
+                  {/* Company */}
+                  <div className="space-y-1.5">
+                    <Input
+                      type="text"
+                      name="company"
+                      placeholder="Company Name"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="bg-secondary border-border h-12 rounded-xl px-4"
+                    />
+                  </div>
+
+                  {/* Service Selection - Spans 2 columns on tablet/desktop */}
+                  <div className="md:col-span-2 space-y-1.5 relative">
+                    <div className="relative">
+                      <select
+                        name="service"
+                        value={formData.service}
+                        onChange={handleChange}
+                        className={`w-full h-12 appearance-none bg-secondary border border-border text-foreground rounded-xl px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${errors.service ? 'border-red-500' : ''} ${formData.service === '' ? 'text-muted-foreground' : 'text-foreground'}`}
+                      >
+                        <option value="" disabled>Select Service Needed</option>
+                        <option value="Social Media Marketing">Social Media Marketing</option>
+                        <option value="Paid Advertising (PPC)">Paid Advertising (PPC)</option>
+                        <option value="SEO & Content">SEO & Content Strategy</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Branding & Design">Branding & Graphic Design</option>
+                        <option value="Marketing Automation">Marketing Automation (AI)</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    </div>
+                    {errors.service && <p className="text-red-500 text-xs px-1">{errors.service}</p>}
+                  </div>
+
+                  {/* Message - Spans 2 columns */}
+                  <div className="md:col-span-2 space-y-1.5">
+                    <Textarea
+                      name="message"
+                      placeholder="Tell us about your project goals..."
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={!!errors.message}
+                      className={`bg-secondary border-border resize-none rounded-xl p-4 ${errors.message ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                    />
+                    {errors.message && <p className="text-red-500 text-xs px-1">{errors.message}</p>}
+                  </div>
+
                 </div>
-                <Input
-                  type="text"
-                  name="subject"
-                  placeholder="Subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  maxLength={200}
-                  aria-label="Message subject"
-                  className="bg-secondary border-border h-11 md:h-12 text-sm md:text-base rounded-xl"
-                />
-                <div>
-                  <Textarea
-                    name="message"
-                    placeholder="Your Message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    maxLength={2000}
-                    aria-label="Your message"
-                    aria-invalid={!!errors.message}
-                    className={`bg-secondary border-border resize-none text-sm md:text-base rounded-xl ${errors.message ? 'border-red-500' : ''}`}
-                  />
-                  {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
-                </div>
+
                 <Magnetic strength={0.3}>
-                  <Button type="submit" className="w-full bg-primary text-primary-foreground font-semibold h-11 md:h-12 text-sm md:text-base rounded-xl">
-                    Send Message
+                  <Button type="submit" className="w-full bg-primary text-primary-foreground font-semibold h-12 rounded-xl text-base mt-2">
+                    Send Inquiry
                     <Send className="ml-2 h-4 w-4" />
                   </Button>
                 </Magnetic>
+                
                 {submissionStatus && (
-                  <p className="text-center text-primary font-medium text-sm">{submissionStatus}</p>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`text-center font-medium text-sm p-3 rounded-lg ${submissionStatus.includes('success') ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}
+                  >
+                    {submissionStatus}
+                  </motion.div>
                 )}
               </form>
             </motion.div>
 
+            {/* Info & Socials Block */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="space-y-4 md:space-y-6"
+              className="space-y-6 flex flex-col"
             >
-              <div className="premium-card p-5 md:p-8 rounded-2xl">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
+              <div className="premium-card p-6 md:p-8 rounded-2xl flex-1">
+                <h2 className="text-xl md:text-2xl font-bold mb-6">
                   Contact <span className="text-gradient-gold">Info</span>
                 </h2>
-                <div className="space-y-4 md:space-y-6">
+                <div className="space-y-6">
                   {contactInfo.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3 md:gap-4">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                    <div key={i} className="flex items-start gap-4 group">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <item.icon className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm md:text-base mb-0.5">{item.title}</h3>
-                        <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">{item.info}</p>
+                        <h3 className="font-semibold text-base mb-1">{item.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{item.info}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="premium-card p-4 md:p-6 rounded-2xl">
-                <h3 className="font-bold text-sm md:text-base mb-3 md:mb-4 text-center">Follow Us</h3>
-                <div className="grid grid-cols-4 md:grid-cols-2 gap-2 md:gap-4">
+              <div className="premium-card p-6 md:p-8 rounded-2xl">
+                <h3 className="font-bold text-base mb-4 text-center md:text-left">Follow Us</h3>
+                <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-2 gap-3">
                   {socialLinks.map((social, i) => (
                     <a
                       key={i}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 border rounded-xl p-2 md:p-3 transition-all ${social.color}`}
+                      className={`flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 border rounded-xl p-3 transition-all hover:scale-105 active:scale-95 ${social.color}`}
                     >
                       <social.icon className="w-5 h-5" />
-                      <span className="text-[10px] md:text-sm font-medium">{social.label}</span>
+                      <span className="text-[10px] md:text-sm font-medium hidden md:block">{social.label}</span>
                     </a>
                   ))}
                 </div>
@@ -259,6 +326,7 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Map Section */}
       <section className="py-12 md:py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -272,7 +340,7 @@ const Contact = () => {
               Our <span className="text-gradient-gold">Global Reach</span>
             </h2>
             <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
-              From Hyderabad to the world — we serve clients across continents with tailored digital solutions.
+              From Hyderabad to the world — we serve clients across continents.
             </p>
           </motion.div>
           <motion.div
@@ -282,12 +350,8 @@ const Contact = () => {
             viewport={{ once: true }}
             className="premium-card p-4 md:p-8 rounded-2xl"
           >
-            {/* Suspense is needed for Lazy Loading */}
             <Suspense fallback={<div className="w-full aspect-[2/1] bg-secondary/30 rounded-lg animate-pulse" />}>
-              <WorldMap
-                lineColor="#d4a853"
-                dots={MAP_DOTS}
-              />
+              <WorldMap lineColor="#d4a853" dots={MAP_DOTS} />
             </Suspense>
           </motion.div>
         </div>
