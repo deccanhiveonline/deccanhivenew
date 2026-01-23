@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import LenisProvider, { useLenis } from "@/components/LenisProvider";
 import Layout from "@/components/Layout";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -45,6 +46,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <Analytics />
+        <SpeedInsights />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
