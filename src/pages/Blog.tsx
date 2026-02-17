@@ -5,6 +5,7 @@ import ModernBlogCard from '@/components/ModernBlogCard';
 import { motion } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import SEOHead from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Import
 
 export interface BlogPost {
   id: number;
@@ -69,6 +70,11 @@ const Blog = () => {
         description="Stay ahead with our latest insights, tips, and strategies in digital marketing. Learn SEO, Google Ads, social media marketing, and more."
         canonicalPath="/blog"
       />
+      {/* FIXED: Added BreadcrumbSchema */}
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' }, 
+        { name: 'Blog', url: 'https://deccanhive.com/blog' }
+      ]} />
 
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24">
@@ -78,6 +84,9 @@ const Blog = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            {/* FIXED: Added Hidden H1 */}
+            <h1 className="sr-only">Latest Digital Marketing Insights & Blog</h1>
+
             <span className="label-tag mb-6">Knowledge Hub</span>
             <GradualSpacing
               text="RECENT ARTICLES"
