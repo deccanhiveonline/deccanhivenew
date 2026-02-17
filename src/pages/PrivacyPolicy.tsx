@@ -1,4 +1,5 @@
 import SEOHead from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/JsonLd';
 
 const PrivacyPolicy = () => (
   // UPDATED: Removed bg-background and min-h-screen
@@ -8,6 +9,11 @@ const PrivacyPolicy = () => (
       description="Learn how Deccan Hive Digital Agency collects, uses, and protects your personal information. We value your privacy and are committed to data security."
       canonicalPath="/privacy-policy"
     />
+    <BreadcrumbSchema items={[
+      { name: 'Home', url: 'https://deccanhive.com' },
+      { name: 'Privacy Policy', url: 'https://deccanhive.com/privacy-policy' }
+    ]} />
+
     <article className="pt-24 pb-16">
       <div className="container mx-auto px-4 max-w-4xl">
         <header className="text-center mb-12">
@@ -59,5 +65,3 @@ const PrivacyPolicy = () => (
 );
 
 export default PrivacyPolicy;
-
-
