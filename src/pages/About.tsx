@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Magnetic } from '@/components/ui/magnetic';
 import SEOHead from '@/components/SEOHead';
-import { OrganizationSchema } from '@/components/JsonLd';
+import { OrganizationSchema, BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Imported BreadcrumbSchema
 import TeamSection from '@/components/TeamSection';
 
 const About = () => {
@@ -29,6 +29,11 @@ const About = () => {
         canonicalPath="/about"
       />
       <OrganizationSchema />
+      {/* FIXED: Added Breadcrumb Schema */}
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' }, 
+        { name: 'About Us', url: 'https://deccanhive.com/about' }
+      ]} />
 
       {/* Hero Section with Parallax */}
       <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
@@ -41,6 +46,9 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
+            {/* FIXED: Added Hidden H1 for SEO */}
+            <h1 className="sr-only">About Deccan Hive - Leading Digital Marketing Agency</h1>
+            
             <span className="label-tag mb-6">About Deccan Hive</span>
             <GradualSpacing
               text="WE ARE DECCAN HIVE"
