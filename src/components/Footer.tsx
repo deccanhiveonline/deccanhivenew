@@ -33,8 +33,9 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="/" onClick={handleLogoClick} className="flex items-center space-x-3 mb-5 group w-fit">
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform shadow-sm border border-border/10">
+                {/* UPDATED: logo1.webp */}
                 <img 
-                  src="/logo1.png" 
+                  src="/logo1.webp" 
                   alt="Deccan Hive Logo"
                   width="40"
                   height="40"
