@@ -1,4 +1,5 @@
 import SEOHead from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/JsonLd';
 
 const TermsConditions = () => (
   // UPDATED: Removed bg-background and min-h-screen
@@ -8,6 +9,11 @@ const TermsConditions = () => (
       description="Read Deccan Hive's terms and conditions for digital marketing services. Understand our service agreement, payments, and refund policies."
       canonicalPath="/terms-conditions"
     />
+    <BreadcrumbSchema items={[
+      { name: 'Home', url: 'https://deccanhive.com' },
+      { name: 'Terms & Conditions', url: 'https://deccanhive.com/terms-conditions' }
+    ]} />
+
     <article className="pt-24 pb-16">
       <div className="container mx-auto px-4 max-w-4xl">
         <header className="text-center mb-12">
@@ -48,4 +54,3 @@ const TermsConditions = () => (
 );
 
 export default TermsConditions;
-
