@@ -8,7 +8,7 @@ import StatsSection from '@/components/StatsSection';
 import FAQSection from '@/components/FAQSection';
 import { Link } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
-import { OrganizationSchema } from '@/components/JsonLd';
+import { OrganizationSchema, WebsiteSchema } from '@/components/JsonLd'; // FIXED: Added WebsiteSchema
 
 const Index = () => {
   // Parallax scroll effects
@@ -37,6 +37,7 @@ const Index = () => {
         canonicalPath="/"
       />
       <OrganizationSchema />
+      <WebsiteSchema /> {/* FIXED: Added this for better Site Identification */}
       
       {/* Hero Section with Parallax */}
       <section className="relative min-h-screen flex items-center justify-center px-4 pt-24 overflow-hidden">
@@ -49,7 +50,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* FIX: Removed <br /> tags and added text-balance + max-w constraint */}
+            {/* The existing H1 is excellent for SEO, no need to hide it */}
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 text-foreground text-balance max-w-4xl mx-auto">
               WE OFFER <span className="text-primary">360°</span> DIGITAL SOLUTIONS THAT DELIVER
             </h1>
@@ -103,7 +104,6 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <span className="label-tag mb-4">Our Works</span>
-              {/* FIX: Removed <br /> tags and added text-balance */}
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-balance max-w-3xl">
                 OUR WORK SPEAKS LOUDER THAN WORDS
               </h2>
