@@ -6,6 +6,7 @@ interface SEOHeadProps {
   canonicalPath?: string;
   keywords?: string;
   type?: 'website' | 'article';
+  robots?: string; // NEW: Allows us to override robots (e.g., for 404 pages)
 }
 
 const SEOHead = ({ 
@@ -13,7 +14,8 @@ const SEOHead = ({
   description, 
   canonicalPath = '', 
   keywords = 'digital marketing, SEO, social media marketing, Google Ads, Meta Ads, web development, Hyderabad',
-  type = 'website'
+  type = 'website',
+  robots = 'index, follow' // Default to index
 }: SEOHeadProps) => {
   const baseUrl = 'https://deccanhive.com';
   const fullUrl = `${baseUrl}${canonicalPath}`;
@@ -37,10 +39,7 @@ const SEOHead = ({
 
     updateMetaTag('description', description);
     updateMetaTag('keywords', keywords);
-    
-    // --- FIX START: Force indexing ---
-    updateMetaTag('robots', 'index, follow');
-    // --- FIX END ---
+    updateMetaTag('robots', robots); // FIXED: Uses the prop now
 
     updateMetaTag('og:title', fullTitle, true);
     updateMetaTag('og:description', description, true);
@@ -59,9 +58,9 @@ const SEOHead = ({
     canonical.setAttribute('href', fullUrl);
 
     return () => {
-      // Cleanup is optional since we're updating the same elements
+      // Cleanup optional
     };
-  }, [fullTitle, description, keywords, fullUrl, type]);
+  }, [fullTitle, description, keywords, fullUrl, type, robots]);
 
   return null;
 };
