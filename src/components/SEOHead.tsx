@@ -37,6 +37,11 @@ const SEOHead = ({
 
     updateMetaTag('description', description);
     updateMetaTag('keywords', keywords);
+    
+    // --- FIX START: Force indexing ---
+    updateMetaTag('robots', 'index, follow');
+    // --- FIX END ---
+
     updateMetaTag('og:title', fullTitle, true);
     updateMetaTag('og:description', description, true);
     updateMetaTag('og:url', fullUrl, true);
