@@ -8,7 +8,7 @@ import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Magnetic } from '@/components/ui/magnetic';
 import FAQSection from '@/components/FAQSection';
 import SEOHead from '@/components/SEOHead';
-import { OrganizationSchema } from '@/components/JsonLd';
+import { OrganizationSchema, BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Import
 import { z } from 'zod';
 
 const WorldMap = lazy(() => import('@/components/ui/world-map').then(module => ({ default: module.WorldMap })));
@@ -108,6 +108,11 @@ const Contact = () => {
         canonicalPath="/contact"
       />
       <OrganizationSchema />
+      {/* FIXED: Added BreadcrumbSchema */}
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' }, 
+        { name: 'Contact Us', url: 'https://deccanhive.com/contact' }
+      ]} />
 
       {/* Hero Section with Parallax */}
       <section className="relative min-h-[40vh] md:min-h-[60vh] flex items-center justify-center px-4 pt-20 md:pt-24 overflow-hidden">
@@ -120,6 +125,9 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
+            {/* FIXED: Added Hidden H1 */}
+            <h1 className="sr-only">Contact Deccan Hive - Get in Touch</h1>
+
             <span className="label-tag mb-4 md:mb-6 text-xs md:text-sm">Let's Connect</span>
             <GradualSpacing
               text="Get In Touch"
