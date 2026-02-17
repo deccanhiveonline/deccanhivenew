@@ -4,6 +4,7 @@ import { TrendingUp, BarChart3, Users, DollarSign } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import SEOHead from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Import
 
 const Portfolio = () => {
   // Parallax Logic
@@ -25,6 +26,12 @@ const Portfolio = () => {
         description="See how Deccan Hive helps businesses grow. From 'Deccan Marketing' strategies to advanced AI automation, explore our case studies in social media and PR."
         canonicalPath="/portfolio"
       />
+      {/* FIXED: Added BreadcrumbSchema */}
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' }, 
+        { name: 'Portfolio', url: 'https://deccanhive.com/portfolio' }
+      ]} />
+
       {/* Hero Section with Parallax */}
       <section className="relative min-h-[80vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
         <motion.div 
@@ -36,6 +43,9 @@ const Portfolio = () => {
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
+            {/* FIXED: Added Hidden H1 */}
+            <h1 className="sr-only">Our Success Stories & Case Studies</h1>
+
             <span className="label-tag mb-6">Proven Results</span>
             <GradualSpacing text="SUCCESS STORIES" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground" duration={0.3} delayMultiple={0.03} />
             <p className="text-muted-foreground text-lg mt-6 max-w-2xl mx-auto text-pretty">Real results for real businesses. Discover how we've helped our clients achieve remarkable growth.</p>
