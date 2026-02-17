@@ -13,8 +13,8 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
     "description": "Full-service digital marketing agency helping micro and local businesses grow with proven strategies.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Beside Pochamma Temple Alwal Rd, Anand Rao Nagar, Srilaxmi Nagar, Alwal, Secunderabad",
-      "addressLocality": "Hyderabad",
+      "streetAddress": "Plot Number 99, HNO: 1-5-1069, Colony Rd, Father Balaiah Nagar, Alwal",
+      "addressLocality": "Secunderabad",
       "addressRegion": "Telangana",
       "postalCode": "500010",
       "addressCountry": "IN"
@@ -64,25 +64,6 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
     />
   );
 };
-
-// --- NEW: Website Schema for Homepage ---
-export const WebsiteSchema = () => {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Deccan Hive",
-    "alternateName": "Deccan Hive Digital Agency",
-    "url": "https://deccanhive.com"
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-};
-// ----------------------------------------
 
 interface ServiceSchemaProps {
   serviceName: string;
@@ -178,6 +159,24 @@ export const ArticleSchema = ({
       "@type": "WebPage",
       "@id": url
     }
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+};
+
+// --- NEW: Website Schema for Homepage ---
+export const WebsiteSchema = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Deccan Hive",
+    "alternateName": "Deccan Hive Digital Agency",
+    "url": "https://deccanhive.com"
   };
 
   return (
