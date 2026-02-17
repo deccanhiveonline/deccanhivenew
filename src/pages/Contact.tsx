@@ -8,7 +8,7 @@ import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Magnetic } from '@/components/ui/magnetic';
 import FAQSection from '@/components/FAQSection';
 import SEOHead from '@/components/SEOHead';
-import { OrganizationSchema, BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Import
+import { OrganizationSchema, BreadcrumbSchema } from '@/components/JsonLd';
 import { z } from 'zod';
 
 const WorldMap = lazy(() => import('@/components/ui/world-map').then(module => ({ default: module.WorldMap })));
@@ -89,7 +89,7 @@ const Contact = () => {
     { icon: Phone, title: 'Mobile & WhatsApp', info: '+91 63038 66637' },
     { icon: Phone, title: 'Landline', info: '+91 40 4550 9587' },
     { icon: Mail, title: 'Email', info: 'deccanhiveonline@gmail.com' },
-    { icon: MapPin, title: 'Address', info: 'Beside Pochamma Temple Alwal Rd, Anand Rao Nagar, Srilaxmi Nagar, Alwal, Secunderabad, Hyderabad, Telangana 500010' },
+    { icon: MapPin, title: 'Address', info: 'Plot Number 99, HNO: 1-5-1069, Colony Rd, Father Balaiah Nagar, Alwal, Secunderabad, Hyderabad, Telangana 500010' },
     { icon: Clock, title: 'Business Hours', info: 'Mon - Sat: 9:00 AM - 7:00 PM' }
   ];
 
@@ -108,7 +108,6 @@ const Contact = () => {
         canonicalPath="/contact"
       />
       <OrganizationSchema />
-      {/* FIXED: Added BreadcrumbSchema */}
       <BreadcrumbSchema items={[
         { name: 'Home', url: 'https://deccanhive.com' }, 
         { name: 'Contact Us', url: 'https://deccanhive.com/contact' }
@@ -125,9 +124,7 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            {/* FIXED: Added Hidden H1 */}
             <h1 className="sr-only">Contact Deccan Hive - Get in Touch</h1>
-
             <span className="label-tag mb-4 md:mb-6 text-xs md:text-sm">Let's Connect</span>
             <GradualSpacing
               text="Get In Touch"
@@ -156,7 +153,6 @@ const Contact = () => {
                 Send us a <span className="text-gradient-gold">Message</span>
               </h2>
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6" noValidate>
-                {/* ... Form Inputs (Same as before) ... */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   <div>
                     <Input
@@ -233,7 +229,6 @@ const Contact = () => {
               viewport={{ once: true }}
               className="space-y-4 md:space-y-6"
             >
-              {/* ... Contact Info & Socials (Same as before) ... */}
               <div className="premium-card p-5 md:p-8 rounded-2xl">
                 <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">
                   Contact <span className="text-gradient-gold">Info</span>
