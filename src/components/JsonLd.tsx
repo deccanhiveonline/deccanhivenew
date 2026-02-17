@@ -65,6 +65,25 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
   );
 };
 
+// --- NEW: Website Schema for Homepage ---
+export const WebsiteSchema = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Deccan Hive",
+    "alternateName": "Deccan Hive Digital Agency",
+    "url": "https://deccanhive.com"
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+};
+// ----------------------------------------
+
 interface ServiceSchemaProps {
   serviceName: string;
   serviceDescription: string;
