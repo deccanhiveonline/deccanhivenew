@@ -9,7 +9,7 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
     "name": "Deccan Hive Private Limited",
     "alternateName": "Deccan Hive",
     "url": "https://deccanhive.com",
-    "logo": "https://deccanhive.com/logo2.png",
+    "logo": "https://deccanhive.com/logo2.webp",
     "description": "Full-service digital marketing agency helping micro and local businesses grow with proven strategies.",
     "address": {
       "@type": "PostalAddress",
@@ -21,7 +21,7 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-90631-17093",
+      "telephone": "+91 63038 66637",
       "contactType": "customer service",
       "email": "deccanhiveonline@gmail.com",
       "availableLanguage": ["English", "Hindi", "Telugu"]
@@ -152,7 +152,7 @@ export const ArticleSchema = ({
       "name": "Deccan Hive",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://deccanhive.com/logo2.png"
+        "url": "https://deccanhive.com/logo2.webp"
       }
     },
     "mainEntityOfPage": {
@@ -169,7 +169,6 @@ export const ArticleSchema = ({
   );
 };
 
-// --- NEW: Website Schema for Homepage ---
 export const WebsiteSchema = () => {
   const schema = {
     "@context": "https://schema.org",
