@@ -2,7 +2,7 @@ import { ArrowLeft, Calendar, Clock, User, Tag, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, Link } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
-import { ArticleSchema } from '@/components/JsonLd';
+import { ArticleSchema, BreadcrumbSchema } from '@/components/JsonLd';
 
 const BlogPost1 = () => {
   const navigate = useNavigate();
@@ -42,6 +42,11 @@ const BlogPost1 = () => {
         authorName={post.author}
         url="https://deccanhive.com/blog/local-seo-strategies-2024"
       />
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' },
+        { name: 'Blog', url: 'https://deccanhive.com/blog' },
+        { name: post.title, url: 'https://deccanhive.com/blog/local-seo-strategies-2024' }
+      ]} />
       
       <article>
         <header className="relative min-h-[50vh] flex items-center justify-center px-4 pt-24">
