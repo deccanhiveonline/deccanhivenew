@@ -13,12 +13,11 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    // UPDATED: Removed bg-background so GoldenHorizonBg isn't covered
     <main className="min-h-screen relative text-foreground overflow-x-hidden">
       <SEOHead 
         title="Page Not Found - 404 Error"
-        description="The page you're looking for doesn't exist. Return to Deccan Hive's homepage to explore our digital marketing services."
-        canonicalPath="/404"
+        description="The page you're looking for doesn't exist."
+        robots="noindex, nofollow" // FIXED: Explicitly tells Google to ignore this page
       />
       <GoldenHorizonBg />
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
