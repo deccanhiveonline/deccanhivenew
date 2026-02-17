@@ -113,8 +113,8 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Beside Pochamma Temple Alwal Rd,<br className="hidden sm:block" />
-                  Anand Rao Nagar, Srilaxmi Nagar,<br className="hidden sm:block" />
+                  Plot Number 99, HNO: 1-5-1069,<br className="hidden sm:block" />
+                  Colony Rd, Father Balaiah Nagar,<br className="hidden sm:block" />
                   Alwal, Secunderabad, Hyderabad,<br className="hidden sm:block" />
                   Telangana 500010
                 </p>
