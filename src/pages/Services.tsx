@@ -6,7 +6,7 @@ import { GradualSpacing } from '@/components/ui/gradual-spacing';
 import { Card, CardContent } from '@/components/ui/card';
 import { Magnetic } from '@/components/ui/magnetic';
 import SEOHead from '@/components/SEOHead';
-import { ServiceSchema } from '@/components/JsonLd';
+import { ServiceSchema, BreadcrumbSchema } from '@/components/JsonLd'; // FIXED: Import BreadcrumbSchema
 
 const Services = () => {
   // Parallax Logic
@@ -80,6 +80,11 @@ const Services = () => {
         canonicalPath="/services"
       />
       <ServiceSchema serviceName="Digital Marketing Services" serviceDescription="Comprehensive 360° digital marketing solutions including paid advertising, SEO, web development, and content marketing." />
+      {/* FIXED: Added BreadcrumbSchema */}
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: 'https://deccanhive.com' }, 
+        { name: 'Services', url: 'https://deccanhive.com/services' }
+      ]} />
       
       {/* Hero Section with Parallax */}
       <section className="relative min-h-[70vh] flex items-center justify-center px-4 pt-24 overflow-hidden">
@@ -92,6 +97,9 @@ const Services = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
+            {/* FIXED: Added Hidden H1 */}
+            <h1 className="sr-only">Comprehensive Digital Marketing Services</h1>
+
             <span className="label-tag mb-6">360° Digital Solutions</span>
             <GradualSpacing
               text="OUR SERVICES"
