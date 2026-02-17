@@ -60,8 +60,9 @@ const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
             <div className="flex-1 flex justify-start">
               <a href="/" onClick={handleLogoClick} className="flex items-center gap-2 sm:gap-3 group flex-shrink-0 w-fit">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform shadow-sm border border-white/20">
+                  {/* UPDATED: logo2.webp */}
                   <img 
-                    src="/logo2.png" 
+                    src="/logo2.webp" 
                     alt="Deccan Hive Logo" 
                     className="w-full h-full object-contain p-1" 
                   />
@@ -153,7 +154,8 @@ const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
           <div className="flex items-center justify-between p-4 sm:p-6 border-b border-primary/10">
             <a href="/" onClick={handleLogoClick} className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-black/5 border border-border/10 overflow-hidden">
-                <img src="/logo2.png" alt="DH" className="w-full h-full object-contain p-1" />
+                {/* UPDATED: logo2.webp */}
+                <img src="/logo2.webp" alt="DH" className="w-full h-full object-contain p-1" />
               </div>
               <div>
                 <span className="font-heading font-bold text-foreground block leading-tight">Deccan Hive</span>
@@ -205,6 +207,5 @@ const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
     </>
   );
 };
-
 
 export default Header;
