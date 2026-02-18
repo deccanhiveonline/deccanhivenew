@@ -30,6 +30,7 @@ const SEOHead = ({
     fullUrl = typeof window !== 'undefined' ? window.location.href : baseUrl;
   }
 
+  // FIXED: Cleaner, shorter title logic
   const fullTitle = title.includes('Deccan Hive') ? title : `${title} | Deccan Hive`;
 
   return (
