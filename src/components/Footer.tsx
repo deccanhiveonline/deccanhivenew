@@ -33,7 +33,6 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="/" onClick={handleLogoClick} className="flex items-center space-x-3 mb-5 group w-fit">
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform shadow-sm border border-border/10">
-                {/* UPDATED: logo1.webp */}
                 <img 
                   src="/logo1.webp" 
                   alt="Deccan Hive Logo"
@@ -52,40 +51,16 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
             </p>
             {/* Social Links */}
             <div className="flex flex-wrap gap-3">
-              <a
-                href="https://instagram.com/deccanhive.digitalagency"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                aria-label="Instagram"
-              >
+              <a href="https://instagram.com/deccanhive.digitalagency" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="Instagram">
                 <Instagram size={18} />
               </a>
-              <a
-                href="https://facebook.com/deccanhive"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                aria-label="Facebook"
-              >
+              <a href="https://facebook.com/deccanhive" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="Facebook">
                 <Facebook size={18} />
               </a>
-              <a
-                href="https://linkedin.com/company/deccanhive"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                aria-label="LinkedIn"
-              >
+              <a href="https://linkedin.com/company/deccanhive" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="LinkedIn">
                 <Linkedin size={18} />
               </a>
-              <a
-                href="https://youtube.com/@deccanhive"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                aria-label="YouTube"
-              >
+              <a href="https://youtube.com/@deccanhive" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="YouTube">
                 <Youtube size={18} />
               </a>
             </div>
@@ -119,32 +94,21 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
                   Alwal, Secunderabad, Hyderabad,<br className="hidden sm:block" />
                   Telangana 500010
                 </p>
+                {/* FIXED: Hidden Clean Address for Bots */}
+                <address className="sr-only">
+                  Plot Number 99, HNO: 1-5-1069, Colony Rd, Father Balaiah Nagar, Alwal, Secunderabad, Hyderabad, Telangana 500010
+                </address>
               </div>
               <div className="flex items-start space-x-3">
                 <Phone className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <div className="flex flex-col gap-1">
-                  <a
-                    href="tel:+916303866637"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    +91 63038 66637 (Mobile)
-                  </a>
-                  <a
-                    href="tel:+914045509587"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    +91 40 4550 9587 (Landline)
-                  </a>
+                  <a href="tel:+916303866637" className="text-sm text-muted-foreground hover:text-foreground transition-colors">+91 63038 66637 (Mobile)</a>
+                  <a href="tel:+914045509587" className="text-sm text-muted-foreground hover:text-foreground transition-colors">+91 40 4550 9587 (Landline)</a>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                <a
-                  href="mailto:deccanhiveonline@gmail.com"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors break-all"
-                >
-                  deccanhiveonline@gmail.com
-                </a>
+                <a href="mailto:deccanhiveonline@gmail.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors break-all">deccanhiveonline@gmail.com</a>
               </div>
             </div>
           </div>
@@ -157,19 +121,9 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
               © {new Date().getFullYear()} Deccan Hive Pvt Ltd. All rights reserved.
             </p>
             <div className="flex justify-center sm:justify-end items-center gap-4 sm:gap-6">
-              <Link
-                to="/privacy-policy"
-                className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                Privacy Policy
-              </Link>
+              <Link to="/privacy-policy" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
               <span className="text-muted-foreground/30">|</span>
-              <Link
-                to="/terms-conditions"
-                className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                Terms & Conditions
-              </Link>
+              <Link to="/terms-conditions" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">Terms & Conditions</Link>
             </div>
           </div>
         </div>
