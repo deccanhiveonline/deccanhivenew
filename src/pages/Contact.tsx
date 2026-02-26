@@ -94,7 +94,7 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com/deccanhive.digitalagency', label: 'Instagram', color: 'bg-pink-500/10 border-pink-500/20 text-pink-400 hover:bg-pink-500/20' },
+    { icon: Instagram, href: 'https://www.instagram.com/deccanhive/', label: 'Instagram', color: 'bg-pink-500/10 border-pink-500/20 text-pink-400 hover:bg-pink-500/20' },
     { icon: Facebook, href: 'https://facebook.com/deccanhive', label: 'Facebook', color: 'bg-blue-500/10 border-blue-500/20 text-blue-400 hover:bg-blue-500/20' },
     { icon: Linkedin, href: 'https://linkedin.com/company/deccanhive', label: 'LinkedIn', color: 'bg-sky-500/10 border-sky-500/20 text-sky-400 hover:bg-sky-500/20' },
     { icon: Youtube, href: 'https://youtube.com/@deccanhive', label: 'YouTube', color: 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20' }
@@ -283,7 +283,7 @@ const Contact = () => {
               Our <span className="text-gradient-gold">Global Reach</span>
             </h2>
             <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
-              From Hyderabad to the world — we serve clients across continents with tailored digital solutions.
+              From Hyderabad to the world - we serve clients across continents with tailored digital solutions.
             </p>
           </motion.div>
           <motion.div
