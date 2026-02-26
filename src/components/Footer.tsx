@@ -51,7 +51,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
             </p>
             {/* Social Links */}
             <div className="flex flex-wrap gap-3">
-              <a href="https://instagram.com/deccanhive.digitalagency" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="Instagram">
+              <a href="https://www.instagram.com/deccanhive/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="Instagram">
                 <Instagram size={18} />
               </a>
               <a href="https://facebook.com/deccanhive" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-muted/50 rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label="Facebook">
