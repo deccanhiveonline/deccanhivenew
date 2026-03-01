@@ -38,7 +38,7 @@ export default function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           className="mx-auto max-w-xl text-center"
         >
           <span className="label-tag mb-4">FAQ</span>
@@ -50,7 +50,7 @@ export default function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           className="mx-auto mt-12 max-w-xl"
         >
           <Accordion
