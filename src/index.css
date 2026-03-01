@@ -219,3 +219,16 @@ html {
   animation: marquee 40s linear infinite;
   will-change: transform; 
 }
+
+/* -----------------------------------------------
+  HARDWARE ACCELERATED VERTICAL TESTIMONIALS 
+  -----------------------------------------------
+*/
+@keyframes marquee-vertical {
+  0% { 
+    transform: translateY(0%); 
+  }
+  100% { 
+    transform: translateY(-50%); 
+  }
+}
