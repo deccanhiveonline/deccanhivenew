@@ -8,7 +8,7 @@ import StatsSection from '@/components/StatsSection';
 import FAQSection from '@/components/FAQSection';
 import { Link } from 'react-router-dom';
 import SEOHead from '@/components/SEOHead';
-import { OrganizationSchema, WebsiteSchema } from '@/components/JsonLd'; // FIXED: Added WebsiteSchema
+import { OrganizationSchema, WebsiteSchema } from '@/components/JsonLd';
 
 const Index = () => {
   // Parallax scroll effects
@@ -37,7 +37,7 @@ const Index = () => {
         canonicalPath="/"
       />
       <OrganizationSchema />
-      <WebsiteSchema /> {/* FIXED: Added this for better Site Identification */}
+      <WebsiteSchema />
       
       {/* Hero Section with Parallax */}
       <section className="relative min-h-screen flex items-center justify-center px-4 pt-24 overflow-hidden">
@@ -50,7 +50,6 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* The existing H1 is excellent for SEO, no need to hide it */}
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 text-foreground text-balance max-w-4xl mx-auto">
               WE OFFER <span className="text-primary">360°</span> DIGITAL SOLUTIONS THAT DELIVER
             </h1>
@@ -150,7 +149,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             className="premium-card p-8 sm:p-12 lg:p-20 text-center relative overflow-hidden"
           >
             {/* Decorative elements */}
