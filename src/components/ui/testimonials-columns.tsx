@@ -18,10 +18,10 @@ export const TestimonialsColumn = (props: {
     <div className={props.className}>
       <motion.div
         initial={{
-          translateY: props.reverse ? "0%" : "-50%",
+          y: props.reverse ? "0%" : "-50%",
         }}
         animate={{
-          translateY: props.reverse ? "-50%" : "0%",
+          y: props.reverse ? "-50%" : "0%",
         }}
         transition={{
           duration: props.duration || 10,
@@ -29,6 +29,7 @@ export const TestimonialsColumn = (props: {
           ease: "linear",
           repeatType: "loop",
         }}
+        style={{ willChange: "transform" }}
         className="flex flex-col gap-6 pb-6"
       >
         {[
@@ -36,7 +37,7 @@ export const TestimonialsColumn = (props: {
             <React.Fragment key={index}>
               {props.testimonials.map(({ text, image, name, role }, i) => (
                 <div 
-                  className="p-10 rounded-3xl border border-border bg-card/80 backdrop-blur-sm max-w-xs w-full" 
+                  className="p-10 rounded-3xl border border-border bg-card/95 max-w-xs w-full shadow-lg" 
                   key={i}
                 >
                   <div className="text-sm text-foreground/90">{text}</div>
