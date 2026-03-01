@@ -70,7 +70,7 @@ const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           className="flex flex-col items-center justify-center max-w-[540px] mx-auto mb-10"
         >
           <div className="flex justify-center">
@@ -87,10 +87,18 @@ const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
+        <div className="relative flex justify-center gap-6 max-h-[740px] overflow-hidden">
+          
+          {/* Top Fade Overlay */}
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+          
           <TestimonialsColumn testimonials={firstColumn} duration={15} reverse={false} />
           <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} reverse={true} />
           <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} reverse={false} />
+          
+          {/* Bottom Fade Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+          
         </div>
       </div>
     </section>
