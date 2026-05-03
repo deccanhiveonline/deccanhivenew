@@ -59,7 +59,10 @@ export default function Contact() {
     }
 
     setSubmissionStatus('Sending...');
-    const json = JSON.stringify({ ...result.data, access_key: "6e27293d-8692-461d-a764-1b1ddc4d3cc0" });
+    const json = JSON.stringify({ 
+  ...result.data, 
+  access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY 
+});
     
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
