@@ -27,11 +27,11 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: "Deccan Hive - Digital Marketing Agency Hyderabad",
   description: "Deccan Hive is a full-service digital marketing agency helping micro and local businesses grow with proven strategies. Get 360° digital solutions that deliver results.",
-  metadataBase: new URL('https://deccanhive.com'),
+  metadataBase: new URL('https://www.deccanhive.com'),
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://deccanhive.com",
+    url: "https://www.deccanhive.com",
     siteName: "Deccan Hive",
     images: [
       {
