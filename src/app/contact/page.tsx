@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, Instagram, Facebook, Linkedin, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,6 +37,24 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [submissionStatus, setSubmissionStatus] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  // Bot Protection State
+  const [botcheck, setBotcheck] = useState(false);
+  const [mathCaptcha, setMathCaptcha] = useState({ num1: 0, num2: 0 });
+  const [userAnswer, setUserAnswer] = useState('');
+
+  // Initialize random math CAPTCHA on mount
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  const generateCaptcha = () => {
+    setMathCaptcha({
+      num1: Math.floor(Math.random() * 10) + 1,
+      num2: Math.floor(Math.random() * 10) + 1,
+    });
+    setUserAnswer('');
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -48,6 +66,19 @@ export default function Contact() {
     e.preventDefault();
     setErrors({});
     
+    // 1. Honeypot check (rejects silently to confuse bot)
+    if (botcheck) {
+      setSubmissionStatus("Message sent successfully!");
+      return;
+    }
+
+    // 2. Math CAPTCHA check
+    if (parseInt(userAnswer) !== mathCaptcha.num1 + mathCaptcha.num2) {
+      setErrors(prev => ({ ...prev, captcha: "Incorrect answer. Please try again." }));
+      generateCaptcha(); // Regenerate on failure
+      return;
+    }
+
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
@@ -59,10 +90,13 @@ export default function Contact() {
     }
 
     setSubmissionStatus('Sending...');
+    
+    // Include botcheck in payload so Web3Forms also validates the honeypot
     const json = JSON.stringify({ 
-  ...result.data, 
-  access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY 
-});
+      ...result.data, 
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+      botcheck: botcheck
+    });
     
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -74,6 +108,7 @@ export default function Contact() {
       if (res.success) {
         setSubmissionStatus("Message sent successfully!");
         setFormData({ name: '', email: '', subject: '', message: '' });
+        generateCaptcha(); // Reset captcha for next submission
         setTimeout(() => setSubmissionStatus(''), 5000);
       } else {
         setSubmissionStatus(res.message || "Something went wrong.");
@@ -119,6 +154,17 @@ export default function Contact() {
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} viewport={{ once: true }} className="premium-card p-5 md:p-8 rounded-2xl">
               <h2 className="text-xl md:text-2xl font-bold mb-5 md:mb-8">Send us a <span className="text-gradient-gold">Message</span></h2>
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6" noValidate>
+                
+                {/* Honeypot Spam Protection (Hidden from UI) */}
+                <input 
+                  type="checkbox" 
+                  name="botcheck" 
+                  className="hidden" 
+                  style={{ display: 'none' }} 
+                  checked={botcheck} 
+                  onChange={(e) => setBotcheck(e.target.checked)} 
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   <div>
                     <Input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required maxLength={100} className={`bg-secondary border-border h-11 md:h-12 text-sm md:text-base rounded-xl ${errors.name ? 'border-red-500' : ''}`} />
@@ -134,6 +180,31 @@ export default function Contact() {
                   <Textarea name="message" placeholder="Your Message" rows={4} value={formData.message} onChange={handleChange} required maxLength={2000} className={`bg-secondary border-border resize-none text-sm md:text-base rounded-xl ${errors.message ? 'border-red-500' : ''}`} />
                   {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                 </div>
+
+                {/* Math CAPTCHA */}
+                <div>
+                  <div className={`flex items-center gap-3 bg-secondary p-1 pl-4 rounded-xl border border-border transition-colors ${errors.captcha ? 'border-red-500' : ''}`}>
+                     <span className="text-sm md:text-base font-medium text-foreground whitespace-nowrap">
+                       Solve: {mathCaptcha.num1} + {mathCaptcha.num2} =
+                     </span>
+                     <Input 
+                       type="text" 
+                       inputMode="numeric"
+                       pattern="[0-9]*"
+                       placeholder="?" 
+                       value={userAnswer} 
+                       onChange={(e) => {
+                         setUserAnswer(e.target.value);
+                         if (errors.captcha) setErrors(prev => ({ ...prev, captcha: '' }));
+                       }} 
+                       required 
+                       maxLength={3} 
+                       className="flex-1 bg-background border-none shadow-none h-10 text-sm md:text-base rounded-lg focus-visible:ring-1 focus-visible:ring-primary" 
+                     />
+                  </div>
+                  {errors.captcha && <p className="text-red-500 text-xs mt-1 ml-1">{errors.captcha}</p>}
+                </div>
+
                 <Magnetic strength={0.3}>
                   <Button type="submit" className="w-full bg-primary text-primary-foreground font-semibold h-11 md:h-12 text-sm md:text-base rounded-xl">
                     Send Message
