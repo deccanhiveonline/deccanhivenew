@@ -2,8 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // SECURITY NOTE: For production, consider downloading randomuser.me images 
-  // to your /public folder to avoid relying on a 3rd-party host.
   images: {
     remotePatterns: [
       {
@@ -13,10 +11,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Add robust HTTP Security Headers
   async headers() {
     return [
       {
+        // Apply these headers to all routes in your application
         source: '/(.*)',
         headers: [
           {
@@ -29,7 +27,7 @@ const nextConfig: NextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload'
           },
           {
-            // Prevent Clickjacking
+            // Prevent Clickjacking (stops other sites from embedding your site in an iframe)
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN'
           },
@@ -43,9 +41,15 @@ const nextConfig: NextConfig = {
             value: 'origin-when-cross-origin'
           },
           {
-            // Disable unnecessary browser features
+            // Disable unnecessary browser features to reduce attack surface
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
+          },
+          {
+            // Content Security Policy (CSP)
+            // Explicitly allows your own scripts, Next.js/Framer inline scripts, Web3Forms, Vercel Analytics, and randomuser.me images
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://randomuser.me; connect-src 'self' https://api.web3forms.com https://vitals.vercel-insights.com;"
           }
         ],
       },
