@@ -60,7 +60,7 @@ export const OrganizationSchema = ({ type = 'LocalBusiness' }: OrganizationSchem
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 };
@@ -90,7 +90,7 @@ export const ServiceSchema = ({ serviceName, serviceDescription }: ServiceSchema
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 };
@@ -114,7 +114,7 @@ export const BreadcrumbSchema = ({ items }: BreadcrumbSchemaProps) => {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 };
@@ -164,7 +164,7 @@ export const ArticleSchema = ({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 };
@@ -181,7 +181,7 @@ export const WebsiteSchema = () => {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 };
